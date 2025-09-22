@@ -14,27 +14,26 @@
 
 ## Tick 함수 활용한 회전 및 이동 로직 작성
 
+- frame마다 호출되는 Tick함수를 이용해 액터의 회전, 이동 로직을 구현하기로 하였습니다.
+
+- 하지만, 컴퓨터마다 성능이 다르므로 Tick함수에서 단순히 회전값, 이동값을 추가해주면 안 되겠다고 생각하였습니다.
+
+- 따라서, DeltaTime을 이용하여 물리적인 성능 차이를 해결하고자 하였습니다.
+
 - **회전**
     - `Tick(float DeltaTime)`에서 `AddActorLocalRotation()` 사용
     - `RotationSpeed` 변수를 활용하여 초당 회전 각도를 결정
 - **이동**
     - `Tick(float DeltaTime)`에서 위치를 변경하여 **왕복 이동** 구현
-    - `StartLocation`, `MoveSpeed`, `MaxRange` 등을 고려해 일정 범위 안에서 이동
-    - 일정 범위를 벗어나면 이동 방향을 반전시키는 로직 구성
-    - **프레임 독립적** 움직임을 위해 반드시 `DeltaTime`을 이용
+    - 이를 위해 `StartLocation`과 `MaxRange`를 설정하여, 매 Tick함수에서 액터가 이동한 범위를 확인
+    - 일정 범위 이상이라면 이동 속도인 `MoveSpeed`의 값을 반전시켜주어 왕복 이동을 구현
 
 ## 리플렉션 시스템 적용
 
 - `UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platform Settings")` 형태로 주요 변수를 에디터에서 조정할 수 있도록 노출
-
-## 테스트
-
-- 플레이 모드에서 **오브젝트가 의도대로 움직이는지**, **속도 변경이 실시간 반영되는지** 등을 확인
 - 리플렉션 시스템을 이용하여 게임 플레이 도중 **Details 패널**에서 편집 가능하도록 구현
 
 # 시연 영상
-
-
 
 https://github.com/user-attachments/assets/ee513ca1-5b56-449e-ba66-e7b1f5b3446f
 
